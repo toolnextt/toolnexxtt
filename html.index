@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ToolNext — Free Online Tools</title>
+  <meta name="description" content="ToolNext - Secure, fast & free online utilities. Text to speech, OCR, image tools and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="" crossorigin="anonymous" />
+  <style>
+    :root{
+      --bg:#f3f4f6;
+      --card:#ffffff;
+      --muted:#6b7280;
+      --brand1:#4f46e5;
+      --brand2:#6366f1;
+      --glass: rgba(255,255,255,0.6);
+      --text:#111827;
+      --shadow: 0 8px 30px rgba(15,23,42,0.08);
+      --radius:16px;
+      --accent: linear-gradient(135deg,var(--brand1),var(--brand2));
+    }
+    :root.dark{
+      --bg: #071229;
+      --card: rgba(255,255,255,0.04);
+      --muted: #9CA3AF;
+      --text: #E6EEF8;
+      --glass: rgba(255,255,255,0.03);
+      --shadow: 0 8px 30px rgba(2,6,23,0.6);
+      --brand1:#6d79ff;
+      --brand2:#3b82f6;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      transition:background .35s ease, color .35s ease;
+      line-height:1.45;
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:80;
+      backdrop-filter: blur(6px);
+      background: linear-gradient(90deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding:12px 24px;
+      display:flex; align-items:center; gap:18px;
+      justify-content:space-between;
+      box-shadow: var(--shadow);
+      transition: background .35s ease, border-color .35s ease;
+    }
+    :root.dark header{
+      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+    .brand{
+      display:flex; align-items:center; gap:14px; text-decoration:none; color:inherit;
+    }
+    .logo{
+      width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+      background:var(--accent); box-shadow: 0 6px 20px rgba(79,70,229,0.18);
+      flex-shrink:0;
+    }
+    .logo svg{width:28px;height:28px; display:block;}
+    .brand h1{font-size:1.05rem; margin:0; font-weight:700; letter-spacing:0.2px;}
+    .brand p{margin:0; font-size:0.78rem; color:var(--muted); margin-top:2px}
+
+    nav.menu{display:flex; gap:18px; align-items:center;}
+    nav.menu a{color:var(--muted); text-decoration:none; font-weight:600; font-size:0.94rem; padding:8px 10px; border-radius:10px;}
+    nav.menu a:hover{color:var(--text); background:var(--glass);}
+
+    .header-actions{display:flex; gap:12px; align-items:center;}
+    .toggle{
+      display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none;
+      background:transparent; border:0; padding:6px 8px; border-radius:999px;
+    }
+    .switch{
+      width:46px; height:26px; border-radius:999px; background:rgba(0,0,0,0.08); position:relative;
+      display:inline-block; transition:all .25s ease;
+    }
+    :root.dark .switch{background: rgba(255,255,255,0.08)}
+    .knob{
+      position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%;
+      background:white; box-shadow:0 2px 6px rgba(2,6,23,0.2); transition: all .25s ease;
+    }
+    .switch.active{background:linear-gradient(90deg,var(--brand1),var(--brand2));}
+    .switch.active .knob{left:23px; background:white}
+
+    /* Hero */
+    .hero{
+      display:grid; grid-template-columns: 1fr 520px; gap:40px; align-items:center;
+      padding:64px 6vw; max-width:1300px; margin:20px auto;
+    }
+    .hero-left h2{font-size:2.1rem; margin:0 0 12px; line-height:1.06}
+    .hero-left p{color:var(--muted); margin-bottom:20px}
+    .cta{
+      display:inline-flex; gap:12px; align-items:center; padding:12px 18px; border-radius:12px;
+      background:var(--accent); color:#fff; border:0; font-weight:600; cursor:pointer; box-shadow:0 12px 30px rgba(79,70,229,0.15);
+    }
+    .hero-right{
+      display:flex; justify-content:center; align-items:center;
+      background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+      border-radius:20px; padding:28px; box-shadow: var(--shadow);
+    }
+    :root.dark .hero-right{ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+
+    /* MacBook style illustration box */
+    .macbook {
+      width:420px; max-width:100%; border-radius:14px; overflow:hidden; background:linear-gradient(180deg,#eef2ff,#eef2ff);
+      padding:18px; display:flex; flex-direction:column; gap:12px; align-items:center;
+    }
+    :root.dark .macbook{ background: linear-gradient(180deg,#07122a,#05223a) }
+
+    .mac-screen{
+      width:100%; height:220px; border-radius:10px; background:linear-gradient(135deg,#e6eefc,#ffffff); display:flex; align-items:center; justify-content:center;
+      box-shadow: inset 0 -6px 30px rgba(0,0,0,0.03);
+    }
+    :root.dark .mac-screen{ background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); }
+
+    .mac-stand{ width:60%; height:10px; background:rgba(0,0,0,0.06); border-radius:999px; margin-top:6px}
+    :root.dark .mac-stand{ background: rgba(255,255,255,0.04) }
+
+    /* Tools section */
+    section.tools{padding:40px 6vw; max-width:1300px; margin:0 auto}
+    section.tools h3{color:var(--brand1); margin:0 0 14px; font-size:1.25rem}
+    .tools-grid{
+      display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:20px;
+    }
+    .tool-card{
+      background:var(--card); padding:24px; border-radius:14px; box-shadow: var(--shadow); border:1px solid rgba(0,0,0,0.03);
+      transition: transform .22s ease, box-shadow .22s ease;
+      display:flex; gap:14px; align-items:flex-start;
+    }
+    :root.dark .tool-card{ border:1px solid rgba(255,255,255,0.03) }
+    .tool-card:hover{ transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,6,23,0.15) }
+    .tool-card i{font-size:1.55rem; color:var(--brand1); width:42px; height:42px; display:flex; align-items:center; justify-content:center; border-radius:10px; background: linear-gradient(180deg, rgba(79,70,229,0.06), rgba(99,102,241,0.03));}
+    .tool-card h4{margin:0; font-size:1rem}
+    .tool-card p{margin:6px 0 0; color:var(--muted); font-size:0.9rem}
+
+    /* Special: upload tool CTA */
+    .tool-actions{ margin-left:auto; display:flex; gap:8px; align-items:center }
+    .btn-outline{ padding:8px 12px; border-radius:10px; border:1px solid rgba(0,0,0,0.06); background:transparent; cursor:pointer; font-weight:600 }
+    :root.dark .btn-outline{ border-color: rgba(255,255,255,0.04) }
+
+    /* Trusted */
+    .trusted{ text-align:center; padding:28px 6vw; color:var(--muted) }
+
+    /* Contact */
+    .contact{ padding:48px 6vw; max-width:1100px; margin:0 auto; display:grid; grid-template-columns: 1fr 420px; gap:30px; align-items:start; }
+    .contact .card{ background:var(--card); padding:24px; border-radius:12px; box-shadow:var(--shadow); }
+    .contact form input, .contact form textarea{
+      width:100%; padding:12px 14px; border-radius:10px; border:1px solid rgba(0,0,0,0.06); margin-bottom:12px; background:transparent; color:inherit;
+    }
+    :root.dark .contact form input, :root.dark .contact form textarea{ border-color: rgba(255,255,255,0.04) }
+
+    .contact form button{ background:var(--accent); color:#fff; padding:12px 16px; border:0; border-radius:10px; font-weight:700; cursor:pointer }
+
+    footer{ padding:18px 6vw; text-align:center; color:var(--muted); border-top:1px solid rgba(0,0,0,0.03) }
+    :root.dark footer{ border-top:1px solid rgba(255,255,255,0.03) }
+
+    /* Modal for upload tool */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(2,6,23,0.45); display:none; align-items:center; justify-content:center; z-index:120; padding:20px }
+    .modal{ width:100%; max-width:720px; border-radius:14px; overflow:hidden; background:var(--card); padding:22px; box-shadow:0 30px 80px rgba(2,6,23,0.5) }
+    .modal h4{margin:0 0 8px}
+    .file-preview{ display:flex; gap:12px; align-items:center }
+    .img-preview{ width:110px; height:80px; background: #eef2ff; border-radius:10px; display:flex; align-items:center; justify-content:center; overflow:hidden; border:1px solid rgba(0,0,0,0.04) }
+    :root.dark .img-preview{ background: rgba(255,255,255,0.02) }
+
+    /* small screens */
+    @media (max-width:980px){
+      .hero{ grid-template-columns:1fr; padding:36px 6vw; gap:22px; }
+      .contact{ grid-template-columns:1fr; padding:36px 6vw; }
+      header{ padding:10px 14px }
+      nav.menu{ display:none } /* mobile: could add hamburger later */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a class="brand" href="#home">
+      <div class="logo" aria-hidden="true">
+        <!-- Flat MacBook-style vector mark -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <rect x="2.2" y="3.2" width="19.6" height="12.8" rx="2.6" fill="white" opacity=".06"/>
+          <path d="M6 5.5c0-.9.7-1.5 1.6-1.5h8.8C17.3 4 18 4.6 18 5.5v7c0 .9-.7 1.5-1.6 1.5H7.6C6.7 14 6 13.4 6 12.5v-7z" fill="white" opacity=".06"/>
+          <path d="M8 8.5c.45-.9 2.1-1.2 3-.7.9.5 2.1.6 2.8.2.7-.4 1.9-.5 2.6.3-.2-.8-.8-1.5-1.6-1.8-1.2-.5-2.5.05-3.1.3-.6.2-1.9.1-2.7-.3C9.4 5.1 8 6.5 8 8.5z" fill="white" opacity=".12"/>
+        </svg>
+      </div>
+      <div style="line-height:1;">
+        <h1>ToolNext</h1>
+        <p style="margin-top:3px">Secure • Fast • Free</p>
+      </div>
+    </a>
+
+    <nav class="menu" aria-label="Primary">
+      <a href="#home">Home</a>
+      <a href="#tools">Tools</a>
+      <a href="#categories">Categories</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="toggle" id="darkToggle" title="Toggle dark mode" aria-pressed="false">
+        <div style="font-size:0.86rem; color:var(--muted)">Dark</div>
+        <div class="switch" id="switch"><div class="knob"></div></div>
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="home">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-left">
+        <h2 id="hero-title">All-in-One Multi Tool Platform</h2>
+        <p>Fast, secure and 100% free tools for everyday digital tasks — text, images, PDFs and more.</p>
+        <div style="display:flex; gap:12px; margin-top:18px;">
+          <button class="cta" onclick="document.querySelector('#tools').scrollIntoView({behavior:'smooth'})">
+            <i class="fa-solid fa-rocket" style="opacity:0.9"></i> Start Using Tools
+          </button>
+          <a class="btn-outline" style="display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius:10px;" href="#contact">
+            <i class="fa-regular fa-envelope"></i> Contact Us
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-hidden="true">
+        <div class="macbook" role="img" aria-label="Macbook illustration">
+          <div class="mac-screen">
+            <!-- Simple flat MacBook illustration content -->
+            <svg width="260" height="140" viewBox="0 0 260 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;">
+              <rect x="8" y="8" rx="10" width="244" height="124" fill="url(#grad1)"/>
+              <g transform="translate(46,32)">
+                <rect width="168" height="76" rx="8" fill="white" opacity="0.9"/>
+                <text x="12" y="36" font-family="Poppins, sans-serif" font-size="13" fill="#475569">ToolNext — Premium Tools UI</text>
+              </g>
+              <defs>
+                <linearGradient id="grad1" x1="0" x2="1">
+                  <stop offset="0" stop-color="#eef2ff"/>
+                  <stop offset="1" stop-color="#ffffff"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+          <div style="width:100%; display:flex; justify-content:space-between; align-items:center;">
+            <div style="font-size:0.88rem; color:var(--muted)">Trusted by 5,000+ users</div>
+            <div class="mac-stand"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools -->
+    <section id="tools" class="tools" aria-labelledby="tools-heading">
+      <h3 id="tools-heading">Most Useful Tools</h3>
+      <div class="tools-grid" role="list">
+        <!-- 1 -->
+        <div class="tool-card" role="listitem">
+          <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+          <div>
+            <h4>Text to Speech</h4>
+            <p>Convert written text into natural-sounding audio instantly.</p>
+          </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-file-word"></i>
+          <div>
+            <h4>Word Counter</h4>
+            <p>Count words, characters, and sentences with accuracy.</p>
+          </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-image"></i>
+          <div>
+            <h4>Image Compressor</h4>
+            <p>Reduce image size without losing quality. Fast & reliable.</p>
+          </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-qrcode"></i>
+          <div>
+            <h4>QR Code Generator</h4>
+            <p>Create custom QR codes for text, links, and contacts.</p>
+          </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-file-pdf"></i>
+          <div>
+            <h4>PDF to Word Converter</h4>
+            <p>Turn your PDF files into editable Word documents in seconds.</p>
+          </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="tool-card">
+          <i class="fa-brands fa-youtube"></i>
+          <div>
+            <h4>YouTube Thumbnail Downloader</h4>
+            <p>Download thumbnails from any YouTube video in one click.</p>
+          </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-key"></i>
+          <div>
+            <h4>Password Generator</h4>
+            <p>Create secure, random passwords to protect your accounts.</p>
+          </div>
+        </div>
+
+        <!-- 8 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-language"></i>
+          <div>
+            <h4>Text Translator</h4>
+            <p>Translate text between multiple languages instantly.</p>
+          </div>
+        </div>
+
+        <!-- 9 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-scissors"></i>
+          <div>
+            <h4>Image Background Remover</h4>
+            <p>Remove photo backgrounds automatically with AI.</p>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="tool-card">
+          <i class="fa-solid fa-camera"></i>
+          <div>
+            <h4>Image to Text (OCR Converter)</h4>
+            <p>Extract text from images quickly and accurately.</p>
+          </div>
+        </div>
+
+        <!-- 11 (Upload Tool) -->
+        <div class="tool-card" id="uploadCard">
+          <i class="fa-solid fa-upload"></i>
+          <div>
+            <h4>Upload Tool</h4>
+            <p>Upload text or images — try our new upload box for quick processing.</p>
+          </div>
+          <div class="tool-actions">
+            <button class="btn-outline" id="openUpload">Open</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="trusted">
+      <p>ToolNext helps you with everyday digital tasks — simple, powerful & free for everyone.</p>
+    </div>
+
+    <!-- Categories placeholder -->
+    <section id="categories" style="padding:36px 6vw; max-width:1100px; margin:auto;">
+      <h3 style="color:var(--brand1); margin-bottom:12px">Categories</h3>
+      <p style="color:var(--muted)">Quick category breadcrumbs: Images • Text • PDF • Security • Utilities</p>
+    </section>
+
+    <!-- About -->
+    <section id="about" style="padding:36px 6vw; max-width:1100px; margin:auto;">
+      <h3 style="color:var(--brand1); margin-bottom:12px">About ToolNext</h3>
+      <p style="color:var(--muted)">ToolNext is a collection of handy browser-based utilities designed for speed and privacy. Everything runs client-side by default—no accounts required. We'll keep adding more premium features and tools.</p>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="contact" aria-labelledby="contact-heading">
+      <div class="card">
+        <h3 id="contact-heading" style="margin-top:0; color:var(--brand1)">Contact Us</h3>
+        <p style="color:var(--muted)">Have a question or feedback? Send us a message — we'll reply to <strong>toolnextt@gmail.com</strong>.</p>
+        <form id="contactForm" onsubmit="return handleContact(event)">
+          <input type="text" id="name" placeholder="Your name" required />
+          <input type="email" id="email" placeholder="Your email" required />
+          <textarea id="message" rows="5" placeholder="Your message" required></textarea>
+          <button type="submit">Send Message</button>
+          <div id="contactMsg" style="margin-top:12px;color:var(--muted);font-size:0.95rem"></div>
+        </form>
+      </div>
+
+      <aside class="card" aria-label="Contact details">
+        <h4 style="margin-top:0">Get in touch</h4>
+        <p style="color:var(--muted)"><i class="fa-regular fa-envelope"></i>&nbsp; toolnextt@gmail.com</p>
+        <p style="color:var(--muted)"><i class="fa-solid fa-map-pin"></i>&nbsp; Online — Worldwide</p>
+
+        <div style="margin-top:18px">
+          <h5 style="margin:0 0 8px">Follow us</h5>
+          <div style="display:flex; gap:10px;">
+            <a href="#" aria-label="Facebook" style="color:var(--muted)"><i class="fa-brands fa-facebook-f"></i></a>
+            <a href="#" aria-label="Instagram" style="color:var(--muted)"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#" aria-label="Twitter" style="color:var(--muted)"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#" aria-label="LinkedIn" style="color:var(--muted)"><i class="fa-brands fa-linkedin-in"></i></a>
+          </div>
+        </div>
+
+      </aside>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div style="max-width:1200px;margin:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+        <div>&copy; <strong>ToolNext</strong> 2025. All Rights Reserved.</div>
+        <div style="display:flex; gap:12px; align-items:center;">
+          <a href="#privacy" style="color:var(--muted); text-decoration:none">Privacy Policy</a>
+          <a href="#contact" style="color:var(--muted); text-decoration:none">Contact</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Upload modal -->
+  <div class="modal-backdrop" id="uploadModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+        <h4 id="upload-title">Upload Text or Image</h4>
+        <div style="display:flex; gap:8px;">
+          <button class="btn-outline" id="closeModal">Close</button>
+        </div>
+      </div>
+      <p style="color:var(--muted); margin-top:6px">Choose an image or paste text below. This interface is static for now — processing will be added later.</p>
+
+      <div style="margin-top:12px;">
+        <label style="font-weight:600; display:block; margin-bottom:6px">Upload image</label>
+        <input type="file" id="uploadFile" accept="image/*" />
+        <div class="file-preview" style="margin-top:12px">
+          <div class="img-preview" id="imgPreview">No image</div>
+          <div style="flex:1">
+            <label style="font-weight:600; display:block; margin-bottom:6px">Or paste text</label>
+            <textarea id="uploadText" rows="5" placeholder="Type or paste your text here..."></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:14px;">
+          <button class="btn-outline" id="clearUpload">Clear</button>
+          <button class="cta" id="submitUpload">Process</button>
+        </div>
+
+        <div id="uploadMsg" style="margin-top:12px; color:var(--muted)"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Privacy (hidden anchor) -->
+  <section id="privacy" style="display:none;">
+    <h3>Privacy Policy</h3>
+    <p>We respect your privacy. ToolNext does not collect or store personal data from users by default. Tools run in your browser where possible.</p>
+  </section>
+
+<script>
+  // Dark mode toggle
+  (function(){
+    const root = document.documentElement;
+    const toggle = document.getElementById('darkToggle');
+    const switchEl = document.getElementById('switch');
+    const initial = localStorage.getItem('tn-dark') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? '1' : '0');
+
+    function apply(dark){
+      if(dark){
+        document.documentElement.classList.add('dark');
+        switchEl.classList.add('active');
+        toggle.setAttribute('aria-pressed','true');
+      } else {
+        document.documentElement.classList.remove('dark');
+        switchEl.classList.remove('active');
+        toggle.setAttribute('aria-pressed','false');
+      }
+    }
+    apply(initial === '1');
+
+    toggle.addEventListener('click', function(){
+      const isDark = document.documentElement.classList.contains('dark');
+      apply(!isDark);
+      localStorage.setItem('tn-dark', !isDark ? '1' : '0');
+    });
+  })();
+
+  // Upload modal logic
+  (function(){
+    const openBtn = document.getElementById('openUpload');
+    const modal = document.getElementById('uploadModal');
+    const closeBtn = document.getElementById('closeModal');
+    const fileEl = document.getElementById('uploadFile');
+    const imgPreview = document.getElementById('imgPreview');
+    const clearBtn = document.getElementById('clearUpload');
+    const submitBtn = document.getElementById('submitUpload');
+    const uploadMsg = document.getElementById('uploadMsg');
+    const uploadText = document.getElementById('uploadText');
+
+    function openModal(){
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+    }
+    function closeModal(){
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+      uploadMsg.textContent = '';
+    }
+
+    openBtn.addEventListener('click', openModal);
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', function(e){
+      if(e.target === modal) closeModal();
+    });
+
+    fileEl.addEventListener('change', function(){
+      const f = this.files[0];
+      if(!f) { imgPreview.textContent = 'No image'; imgPreview.style.backgroundImage='none'; return; }
+      const reader = new FileReader();
+      reader.onload = function(ev){
+        imgPreview.style.backgroundImage = 'url(' + ev.target.result + ')';
+        imgPreview.style.backgroundSize = 'cover';
+        imgPreview.style.backgroundPosition = 'center';
+        imgPreview.textContent = '';
+      }
+      reader.readAsDataURL(f);
+    });
+
+    clearBtn.addEventListener('click', function(){
+      fileEl.value = '';
+      uploadText.value = '';
+      imgPreview.style.backgroundImage = 'none';
+      imgPreview.textContent = 'No image';
+      uploadMsg.textContent = '';
+    });
+
+    submitBtn.addEventListener('click', function(){
+      const hasFile = fileEl.files && fileEl.files[0];
+      const txt = uploadText.value.trim();
+      if(!hasFile && !txt){
+        uploadMsg.textContent = 'Please provide an image or some text to process.';
+        return;
+      }
+      // Static placeholder behavior
+      uploadMsg.textContent = 'Received — processing will be added later. (This is a static demo)';
+      setTimeout(()=>uploadMsg.textContent = 'Ready — no server connected in this demo.', 1400);
+    });
+
+    // keyboard close
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && modal.style.display === 'flex') closeModal();
+    });
+
+  })();
+
+  // Contact form handler — creates mailto and shows success
+  function handleContact(e){
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    const msgEl = document.getElementById('contactMsg');
+
+    if(!name || !email || !message){
+      msgEl.textContent = 'Please fill all fields.';
+      return false;
+    }
+
+    // Create mailto link (user will open email client). You can replace with real backend later.
+    const subject = encodeURIComponent('ToolNext contact from ' + name);
+    const body = encodeURIComponent('Name: ' + name + '\\nEmail: ' + email + '\\n\\n' + message);
+    const mailto = 'mailto:toolnextt@gmail.com?subject=' + subject + '&body=' + body;
+    window.location.href = mailto;
+
+    msgEl.textContent = 'Opening your email client...';
+    return false;
+  }
+</script>
+
+</body>
+</html>
